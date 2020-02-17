@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     [Header("General Settings")]
     public int maxHealth;
-
-    [Header("Assign Components")]
-    public MageStaff staffOfLighting;
 
     [Header("Check Variables")]
     public float health;
@@ -19,27 +16,14 @@ public class PlayerController : MonoBehaviour
         health = maxHealth;
     }
 
-    /*// Update is called once per frame
-    void Update()
-    {
-        
-    }*/
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "laser")
-        {
-
-        }
-    }
-
     public void ReceiveDamage(float amount)
     {
         health -= amount;
-        if(health <= 0)
+        if (health <= 0)
         {
             health = 0;
-            //Game Over.
+            Debug.Log("dead");
+            Destroy(gameObject);
         }
     }
 }

@@ -11,8 +11,7 @@ public class LightingBeam : MonoBehaviour
     [Header("Checking Variables")]
     public bool isActive;
     public bool canDamage;
-    public bool isTouching;
-    public List<GameObject> enemiesTouching;
+    public List<EnemyController> enemiesTouching;
     public float fireRateTimer;
     // Start is called before the first frame update
     void Start()
@@ -31,13 +30,23 @@ public class LightingBeam : MonoBehaviour
             if (fireRateTimer >= fireRate)
             {
                 fireRateTimer = 0;
-                //canDamage = true;
+                canDamage = true;
             }
 
-            /*if (canDamage)
+            if (enemiesTouching.Count > 0)
             {
-                canDamage = false;
-            }*/
+                if(canDamage)
+                {
+                    for (int i = 0; i < enemiesTouching.Count; i++)
+                    {
+                        Debug.Log("Damage Given to enemy " + i + " : " + damage);
+                        enemiesTouching[i].ReceiveDamage(damage);
+                        //Make damage to all enemies that has touched.
+                    }
+
+                    canDamage = false;
+                }
+            }
         }
     }
 
@@ -46,14 +55,34 @@ public class LightingBeam : MonoBehaviour
     {
         if(other.tag == "enemy")
         {
-            Debug.Log("Damage Given: " + damage);
-            isTouching = true;
-            enemiesTouching.Add(other.gameObject);
+            bool canEnterList = true;
 
-            /*if (canDamage)
+            for (int i = 0; i < enemiesTouching.Count; i++)
             {
-                
-            }*/
+                if(enemiesTouching[i].gameObject == other.gameObject)
+                {
+                    canEnterList = false;
+                }
+            }
+
+            if(canEnterList)
+            {
+                enemiesTouching.Add(other.gameObject.GetComponent<EnemyController>());
+            }
+            
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "enemy")
+        {
+            enemiesTouching.Remove(other.gameObject.GetComponent<EnemyController>());
+        }
+    }
+
+    public void ClearAll()
+    {
+        enemiesTouching.Clear();
     }
 }
