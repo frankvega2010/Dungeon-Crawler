@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Assign Components")]
     public MageStaff staffOfLighting;
+    public HealthBar bar;
 
     [Header("Check Variables")]
     public float health;
@@ -17,13 +18,14 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         health = maxHealth;
+        bar.SetMaxHealth(maxHealth);
     }
 
-    /*// Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
-    }*/
+        health -= 0.1f;
+        bar.SetHealth(health);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
     public void ReceiveDamage(float amount)
     {
         health -= amount;
+        bar.SetHealth(health);
         if(health <= 0)
         {
             health = 0;
