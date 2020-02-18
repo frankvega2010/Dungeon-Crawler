@@ -21,11 +21,6 @@ public class PlayerController : MonoBehaviour
         bar.SetMaxHealth(maxHealth);
     }
 
-    private void Update()
-    {
-        health -= 0.1f;
-        bar.SetHealth(health);
-    }
 
     private void OnTriggerEnter(Collider other)
     {

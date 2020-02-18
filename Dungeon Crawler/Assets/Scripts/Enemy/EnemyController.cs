@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    public HealthBar healthBar;
+
     [Header("General Settings")]
     public int maxHealth;
 
@@ -19,6 +21,8 @@ public class EnemyController : MonoBehaviour
     public void ReceiveDamage(float amount)
     {
         health -= amount;
+        healthBar.SetHealth(health);
+
         if (health <= 0)
         {
             health = 0;
