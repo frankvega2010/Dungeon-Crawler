@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6007766667161806849}
   - component: {fileID: 6253651930830533581}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mage Staff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,11 +46,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseButton: 0
-  damage: 15
+  damage: 20
   fireRate: 0.8
   staffMaxCharge: 100
   staffChargeUsageMultipler: 30
-  staffRechargeMultiplier: 20
+  staffRechargeMultiplier: 30
   canRecharge: 0
   staffCurrentCharge: 0
   lightingGameObject: {fileID: 2369486686565084733}
@@ -67,7 +67,7 @@ GameObject:
   - component: {fileID: 840055761578329783}
   - component: {fileID: 840055761571715735}
   - component: {fileID: 840055761584608465}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirstPersonCharacter
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -162,9 +162,9 @@ GameObject:
   - component: {fileID: 840055761574389751}
   - component: {fileID: 840055761572076919}
   - component: {fileID: 674416582}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FPSController
-  m_TagString: Untagged
+  m_TagString: player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -341,7 +341,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!82 &840055761572076919
 AudioSource:
   m_ObjectHideFlags: 0
@@ -451,10 +451,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  idOfWin: 0
-  maxInventorySlots: 0
-  idOfKeyItem: 0
-  checklistKey: 0
+  idOfWin: -1
+  maxInventorySlots: 3
+  idOfKeyItem: -1
+  checklistKey: 9
   pickupSounds: []
   objectsGrabbed: []
   openChecklistSound: {fileID: 0}
@@ -462,11 +462,11 @@ MonoBehaviour:
   checklistGameObject: {fileID: 0}
   checklistItems: []
   staffOfLighting: {fileID: 6253651930830533581}
-  playerCamera: {fileID: 0}
+  playerCamera: {fileID: 840055761579705493}
   rayCastLayer:
     serializedVersion: 2
-    m_Bits: 0
-  rayDistance: 0
+    m_Bits: 768
+  rayDistance: 8
   health: 0
 --- !u!1 &2369486686565084733
 GameObject:
@@ -481,7 +481,7 @@ GameObject:
   - component: {fileID: 4919695091296090729}
   - component: {fileID: 29825447745755269}
   - component: {fileID: 8147028490602328892}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: lighting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -593,7 +593,7 @@ GameObject:
   - component: {fileID: 2231445515528950312}
   - component: {fileID: 4593418049727689038}
   - component: {fileID: 3875397073132225817}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -670,7 +670,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 7436742388357913259}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1

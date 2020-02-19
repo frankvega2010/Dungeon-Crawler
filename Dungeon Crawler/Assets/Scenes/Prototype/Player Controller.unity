@@ -744,12 +744,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1275009263 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 840055761579705493, guid: 3cb56aa563e9abd489d979026fcff30b,
-    type: 3}
-  m_PrefabInstance: {fileID: 840055760905323346}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1312762114
 GameObject:
   m_ObjectHideFlags: 0
@@ -8163,66 +8157,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 1177201429}
     m_Modifications:
     - target: {fileID: 674416582, guid: 3cb56aa563e9abd489d979026fcff30b, type: 3}
-      propertyPath: checklistKey
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 674416582, guid: 3cb56aa563e9abd489d979026fcff30b, type: 3}
       propertyPath: checklistGameObject
       value: 
       objectReference: {fileID: 1330937923}
-    - target: {fileID: 674416582, guid: 3cb56aa563e9abd489d979026fcff30b, type: 3}
-      propertyPath: rayDistance
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 674416582, guid: 3cb56aa563e9abd489d979026fcff30b, type: 3}
-      propertyPath: maxInventorySlots
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 674416582, guid: 3cb56aa563e9abd489d979026fcff30b, type: 3}
-      propertyPath: idOfWin
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 674416582, guid: 3cb56aa563e9abd489d979026fcff30b, type: 3}
-      propertyPath: idOfKeyItem
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 674416582, guid: 3cb56aa563e9abd489d979026fcff30b, type: 3}
-      propertyPath: playerCamera
-      value: 
-      objectReference: {fileID: 1275009263}
-    - target: {fileID: 674416582, guid: 3cb56aa563e9abd489d979026fcff30b, type: 3}
-      propertyPath: rayCastLayer.m_Bits
-      value: 768
-      objectReference: {fileID: 0}
-    - target: {fileID: 113964559903031710, guid: 3cb56aa563e9abd489d979026fcff30b,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 840055761574389751, guid: 3cb56aa563e9abd489d979026fcff30b,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 840055761579705493, guid: 3cb56aa563e9abd489d979026fcff30b,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 840055761579705495, guid: 3cb56aa563e9abd489d979026fcff30b,
         type: 3}
       propertyPath: m_Name
       value: FPSController
-      objectReference: {fileID: 0}
-    - target: {fileID: 840055761579705495, guid: 3cb56aa563e9abd489d979026fcff30b,
-        type: 3}
-      propertyPath: m_TagString
-      value: player
-      objectReference: {fileID: 0}
-    - target: {fileID: 840055761579705495, guid: 3cb56aa563e9abd489d979026fcff30b,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 840055761579874487, guid: 3cb56aa563e9abd489d979026fcff30b,
         type: 3}
@@ -8278,31 +8219,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2369486686565084733, guid: 3cb56aa563e9abd489d979026fcff30b,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3875397073132225817, guid: 3cb56aa563e9abd489d979026fcff30b,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6253651930830533581, guid: 3cb56aa563e9abd489d979026fcff30b,
-        type: 3}
-      propertyPath: staffRechargeMultiplier
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 6253651930830533581, guid: 3cb56aa563e9abd489d979026fcff30b,
-        type: 3}
-      propertyPath: damage
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 7436742388357913259, guid: 3cb56aa563e9abd489d979026fcff30b,
-        type: 3}
-      propertyPath: m_Layer
-      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cb56aa563e9abd489d979026fcff30b, type: 3}
