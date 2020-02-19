@@ -25,6 +25,7 @@ public class MageStaff : MonoBehaviour
     private Animator staffAnimator;
     private LightingBeam lightingBeam;
     private bool doOnce;
+    public StaffBar staffBar;
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +57,7 @@ public class MageStaff : MonoBehaviour
                 if(!canRecharge)
                 {
                     staffCurrentCharge -= Time.deltaTime * staffChargeUsageMultipler;
+                    staffBar.SetCharge(staffCurrentCharge);
                 }
 
                 if (staffCurrentCharge <= 0)
@@ -79,7 +81,7 @@ public class MageStaff : MonoBehaviour
         if(canRecharge)
         {
             staffCurrentCharge += Time.deltaTime * staffRechargeMultiplier;
-
+            staffBar.SetCharge(staffCurrentCharge);
             if(staffCurrentCharge >= staffMaxCharge)
             {
                 staffCurrentCharge = staffMaxCharge;
