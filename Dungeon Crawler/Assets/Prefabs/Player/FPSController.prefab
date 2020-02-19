@@ -24,14 +24,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113964559903031710}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.319, y: 0.569, z: 1.088}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.31900024, y: -0.23099977, z: 1.088}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8686848937168896835}
   - {fileID: 731666820672842955}
-  m_Father: {fileID: 840055761579874487}
-  m_RootOrder: 1
+  m_Father: {fileID: 840055761579874485}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6253651930830533581
 MonoBehaviour:
@@ -84,7 +84,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 6007766667161806849}
   m_Father: {fileID: 840055761579874487}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -180,7 +181,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 840055761579874485}
-  - {fileID: 6007766667161806849}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -451,7 +451,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  idOfWin: 0
+  maxInventorySlots: 0
+  idOfKeyItem: 0
+  checklistKey: 0
+  pickupSounds: []
+  objectsGrabbed: []
+  openChecklistSound: {fileID: 0}
+  scracthChecklistSound: {fileID: 0}
+  checklistGameObject: {fileID: 0}
+  checklistItems: []
   staffOfLighting: {fileID: 6253651930830533581}
+  playerCamera: {fileID: 0}
+  rayCastLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  rayDistance: 0
   health: 0
 --- !u!1 &2369486686565084733
 GameObject:
