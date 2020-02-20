@@ -7,18 +7,26 @@ public class EnemyController : MonoBehaviour
     public delegate void OnEnemyAction(GameObject enemy);
     public OnEnemyAction OnEnemyDeath;
 
+    public enum States
+    {
+        Follow,
+        Hit,
+        Stunned,
+        Dead,
+        allStates
+    }
+
     [Header("General Settings")]
     public GameObject player;
     public float speed;
     public int maxHealth;
 
-    /*[Header("Spawn Settings")]
-    public bool isInGroup;*/
-
     [Header("Animation Settings")]
     public Animator animator;
 
     [Header("Stun Settings")]
+    public int normalMass;
+    public int stunMass;
     public bool canBeStunned;
     public float stunTime;
     public bool isStunned;
@@ -39,6 +47,8 @@ public class EnemyController : MonoBehaviour
     public float deathTimer;
 
     [Header("Check Variables")]
+    public States currentState;
+    public States lastState;
     public float health;
     public bool isDead;
     public CapsuleCollider hitboxCollider;
@@ -52,7 +62,11 @@ public class EnemyController : MonoBehaviour
         rig = GetComponent<Rigidbody>();
         hitboxCollider = GetComponent<CapsuleCollider>();
         animator = GetComponentInChildren<Animator>();
-        player = GameManager.Get().player;
+        if(GameManager.Get())
+        {
+            player = GameManager.Get().player;
+        }
+        
         playerController = player.GetComponent<PlayerController>();
         currentBox = GetComponentInChildren<EnemyDamageBox>();
         currentBox.OnBoxEnterCollider += StartDamage;
@@ -63,42 +77,22 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        if(!isDead)
-        {
-            if (isStunned)
-            {
-                stunTimer += Time.deltaTime;
-
-                if (stunTimer >= stunTime)
-                {
-                    // si estabas atacando ataca, o sino run
-                    if(isActive)
-                    {
-                        animator.SetTrigger("Hit");
-                    }
-                    else
-                    {
-                        animator.SetTrigger("Run");
-                    }
-                    
-                    isStunned = false;
-                    stunTimer = 0;
-                }
-            }
-            else
-            {
+        switch (currentState)
+        {   
+            case States.Follow:
                 MovementUpdate();
+                break;
+            case States.Hit:
                 DamageUpdate();
-            }
-        }
-        else
-        {
-            deathTimer += Time.deltaTime;
-
-            if(deathTimer >= deathTime)
-            {
-                DestroyAfterAnimation();
-            }
+                break;
+            case States.Stunned:
+                StunUpdate();
+                break;
+            case States.Dead:
+                DeathUpdate();
+                break;
+            default:
+                break;
         }
     }
 
@@ -144,33 +138,76 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void StunUpdate()
+    {
+        if (isStunned)
+        {
+            stunTimer += Time.deltaTime;
+
+            if (stunTimer >= stunTime)
+            {
+                // si estabas atacando ataca, o sino run
+                if (isActive)
+                {
+                    if(!isDead)
+                    {
+                        ChangeState(States.Hit);
+                    }
+                }
+                else
+                {
+                    if (!isDead)
+                    {
+                        ChangeState(States.Follow);
+                    }
+                }
+
+                rig.mass = normalMass;
+                isStunned = false;
+                stunTimer = 0;
+            }
+        }
+    }
+
+    public void DeathUpdate()
+    {
+        deathTimer += Time.deltaTime;
+
+        if (deathTimer >= deathTime)
+        {
+            DestroyAfterAnimation();
+        }
+    }
+
     public void ReceiveDamage(float amount)
     {
         health -= amount;
         if (health <= 0)
         {
             health = 0;
-            Debug.Log("dead");
-            // Execute things to avoid taking damage
-            hitboxCollider.enabled = false;
-            rig.useGravity = false;
-            animator.SetTrigger("Die");
+            ChangeState(States.Dead);
+            Die();
             isDead = true;
-
-            if(OnEnemyDeath != null)
-            {
-                OnEnemyDeath(gameObject);
-            }
         }
         else
         {
             if (canBeStunned)
             {
-                animator.SetTrigger("Stun");
-                isStunned = true;
+                ChangeState(States.Stunned);
             }
         }
-        
+    }
+
+    public void Die()
+    {
+        Debug.Log("dead");
+        hitboxCollider.enabled = false;
+        rig.useGravity = false;
+
+        if (OnEnemyDeath != null)
+        {
+            OnEnemyDeath(gameObject);
+        }
     }
 
     public void DestroyAfterAnimation()
@@ -182,11 +219,12 @@ public class EnemyController : MonoBehaviour
     {
         if (tag == "player")
         {
-            if(!isStunned)
+            if(!isStunned && !isDead)
             {
-                animator.SetTrigger("Hit");
+                //animator.SetTrigger("Hit");
+                ChangeState(States.Hit);
             }
-            
+
             fireRateTimer = 0;
             isActive = true;
         }
@@ -196,13 +234,52 @@ public class EnemyController : MonoBehaviour
     {
         if (tag == "player")
         {
-            if(!isStunned)
+            if(!isStunned && !isDead)
             {
-                animator.SetTrigger("Run");
+                //animator.SetTrigger("Run");
+                ChangeState(States.Follow);
             }
             
             fireRateTimer = 0;
             isActive = false;
+        }
+    }
+
+    public void ChangeState(States newState)
+    {
+        lastState = currentState;
+        currentState = newState;
+
+        switch (currentState)
+        {
+            case States.Follow:
+                //animator.SetTrigger("Run");
+                animator.SetBool("Stun", false);
+                animator.SetBool("Follow", true);
+                animator.SetBool("Hit", false);
+                break;
+            case States.Hit:
+                //animator.SetTrigger("Hit");
+                animator.SetBool("Stun", false);
+                animator.SetBool("Follow", false);
+                animator.SetBool("Hit", true);
+                break;
+            case States.Stunned:
+                //animator.SetTrigger("Stun");
+                animator.SetBool("Stun", true);
+                animator.SetBool("Follow", false);
+                animator.SetBool("Hit", false);
+                isStunned = true;
+                rig.mass = stunMass;
+                break;
+            case States.Dead:
+                animator.SetTrigger("Die");
+                animator.SetBool("Stun", false);
+                animator.SetBool("Follow", false);
+                animator.SetBool("Hit", false);
+                break;
+            default:
+                break;
         }
     }
 
