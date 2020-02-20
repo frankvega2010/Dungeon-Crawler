@@ -6,4 +6,5 @@ public class ObjectCore : MonoBehaviour
 {
     public int id;
     public GameObject icon;
+    public bool canBePickedUp = true;
 }
