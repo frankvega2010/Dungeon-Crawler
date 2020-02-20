@@ -92,13 +92,18 @@ public class DungeonRoom : MonoBehaviour
 
     public void FinishSpawnEvent()
     {
+        // Open Gate
+        doors[doors.Length-1].SetActive(false);
+        spawnedItem.GetComponent<ObjectCore>().canBePickedUp = true;
+    }
+
+    public void OpenAllDoors()
+    {
         // Open all doors
         for (int i = 0; i < doors.Length; i++)
         {
             doors[i].SetActive(false);
         }
-        spawnedItem.GetComponent<ObjectCore>().canBePickedUp = true;
-
     }
 
     public void CloseAllDoors()

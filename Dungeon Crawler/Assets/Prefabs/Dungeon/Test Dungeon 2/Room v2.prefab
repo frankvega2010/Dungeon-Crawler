@@ -1192,9 +1192,10 @@ GameObject:
   - component: {fileID: 811004341344064448}
   - component: {fileID: 811004341344064449}
   - component: {fileID: 811004341344064454}
-  m_Layer: 0
+  - component: {fileID: 1610790068961068913}
+  m_Layer: 11
   m_Name: Entrance
-  m_TagString: Untagged
+  m_TagString: door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1273,6 +1274,29 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1610790068961068913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811004341344064455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b87d73ac88c5ab2409f66a079c5c874c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  currentState: 0
+  lockedDoor: 1
+  idOfKey: 0
+  doorSounds: []
+  sceneChanger: 0
+  nameOfScene: 
+  dialoguePrefab: {fileID: 660532101547537115, guid: 738c93d6581b1804681456d582a588b5,
+    type: 3}
+  dialogueObject: {fileID: 0}
+  dialogueEvent: {fileID: 0}
 --- !u!1 &811004341389387459
 GameObject:
   m_ObjectHideFlags: 0
@@ -2187,9 +2211,10 @@ GameObject:
   - component: {fileID: 811004341603387238}
   - component: {fileID: 811004341603387239}
   - component: {fileID: 811004341603387236}
-  m_Layer: 0
+  - component: {fileID: 1590204605671737615}
+  m_Layer: 11
   m_Name: Exit
-  m_TagString: Untagged
+  m_TagString: door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2268,6 +2293,29 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1590204605671737615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811004341603387242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b87d73ac88c5ab2409f66a079c5c874c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  currentState: 0
+  lockedDoor: 1
+  idOfKey: 0
+  doorSounds: []
+  sceneChanger: 0
+  nameOfScene: 
+  dialoguePrefab: {fileID: 660532101547537115, guid: 738c93d6581b1804681456d582a588b5,
+    type: 3}
+  dialogueObject: {fileID: 0}
+  dialogueEvent: {fileID: 0}
 --- !u!1 &811004341605062904
 GameObject:
   m_ObjectHideFlags: 0
@@ -3063,7 +3111,7 @@ GameObject:
   - component: {fileID: 5312716393545037152}
   - component: {fileID: 5312716393545037180}
   m_Layer: 0
-  m_Name: Room
+  m_Name: Room v2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3179,3 +3227,4 @@ MonoBehaviour:
     - {fileID: 1219328299208681998, guid: 2d6583377a331564fa5fe9932d35ea29, type: 3}
     - {fileID: 1219328299208681998, guid: 2d6583377a331564fa5fe9932d35ea29, type: 3}
   enemiesSpawned: []
+  spawnedItem: {fileID: 0}

@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public delegate void OnPlayerAction();
     public OnPlayerAction OnPlayerPickUpItem;
     public OnPlayerAction OnPlayerPlaceItem;
-    //public OnPlayerAction OnPlayerGetRobot;
+    public OnPlayerAction OnPlayerPickUpLastItem;
     public OnPlayerAction OnPlayerFoundKeyItem;
 
     [System.Serializable]
@@ -108,10 +108,10 @@ public class PlayerController : MonoBehaviour
                     }
                     break;
                 case "door":
+                    Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * hit.distance, Color.blue);
                     if (Input.GetMouseButtonDown(0))
                     {
                         Interact(hit.transform.gameObject);
-                        //hit.transform.gameObject.GetComponentInParent<Door>().Interact();
                     }
                     break;
                 default:
@@ -200,6 +200,19 @@ public class PlayerController : MonoBehaviour
                     }
                 }
 
+                if(newObject.isLastItem)
+                {
+                    // Player can return to home.
+                    Debug.Log("Player Can Go Home");
+
+                    if(OnPlayerPickUpLastItem != null)
+                    {
+                        OnPlayerPickUpLastItem();
+                    }
+                }
+
+                newObject.PickupObject();
+
                 if (isItemOnChecklist)
                 {
                     scracthChecklistSound.Play();
@@ -272,8 +285,12 @@ public class PlayerController : MonoBehaviour
             if (!couldOpenDoor)
             {
                 Debug.Log("DIDNT FOUND KEY");
-                //newDoor.dialogue.isPressed = true;
-                newDoor.doorSounds[(int)Door.doorStates.locked].Play();
+                newDoor.dialogueEvent.CheckMessage();
+                if (newDoor.doorSounds.Length > 0)
+                {
+                    newDoor.doorSounds[(int)Door.doorStates.locked].Play();
+                }
+                
             }
 
 

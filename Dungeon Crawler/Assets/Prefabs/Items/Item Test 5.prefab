@@ -180,6 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f48298485f328409cfb5f5e91fb1e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: Una Cosa 5
   id: 5
   icon: {fileID: 2071999747139590568}
   canBePickedUp: 0

@@ -50,6 +50,7 @@ public class DungeonGenerator : MonoBehaviour
             itemToSpawn.transform.position = newRoomProperties0.itemLocation.transform.position;
             itemToSpawn.transform.rotation = newRoomProperties0.itemLocation.transform.rotation;
             itemToSpawn.GetComponent<ObjectCore>().canBePickedUp = false;
+            itemToSpawn.GetComponent<ObjectCore>().OnObjectPickedUp += newRoomProperties0.OpenAllDoors;
             newRoomProperties0.spawnedItem = itemToSpawn;
 
             int repeatedRoom;
@@ -98,6 +99,7 @@ public class DungeonGenerator : MonoBehaviour
                 itemToSpawnIterator.transform.position = newRoomProperties.itemLocation.transform.position;
                 itemToSpawnIterator.transform.rotation = newRoomProperties.itemLocation.transform.rotation;
                 itemToSpawnIterator.GetComponent<ObjectCore>().canBePickedUp = false;
+                itemToSpawnIterator.GetComponent<ObjectCore>().OnObjectPickedUp += newRoomProperties.OpenAllDoors;
                 newRoomProperties.spawnedItem = itemToSpawnIterator;
 
                 lastRandomNumber = randomRoomNumber2;
@@ -118,6 +120,8 @@ public class DungeonGenerator : MonoBehaviour
             itemToSpawnLast.transform.position = newRoomProperties2.itemLocation.transform.position;
             itemToSpawnLast.transform.rotation = newRoomProperties2.itemLocation.transform.rotation;
             itemToSpawnLast.GetComponent<ObjectCore>().canBePickedUp = false;
+            itemToSpawnLast.GetComponent<ObjectCore>().isLastItem = true;
+            itemToSpawnLast.GetComponent<ObjectCore>().OnObjectPickedUp += newRoomProperties2.OpenAllDoors;
             newRoomProperties2.spawnedItem = itemToSpawnLast;
         }
         

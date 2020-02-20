@@ -187,7 +187,7 @@ public class EnemyController : MonoBehaviour
                 animator.SetTrigger("Hit");
             }
             
-            fireRateTimer = 0; // Maybe change it to zero to avoid instant damage?
+            fireRateTimer = 0;
             isActive = true;
         }
     }

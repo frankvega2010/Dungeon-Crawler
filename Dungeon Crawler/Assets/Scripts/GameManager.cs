@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviourSingleton<GameManager>
 {
     [Header("General Settings")]
+    public GameObject checklistItemUIPrefab;
     public GameObject player;
-    public GameObject item;
+    public GameObject initialRoom;
+    public Door initialDoor;
     public DungeonGenerator generator;
 
     [Header("Item Settings")]
@@ -15,9 +18,13 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public GameObject[] itemsNeeded;
 
     public List<int> itemNumber;
+    private PlayerController playerController;
     // Start is called before the first frame update
     void Start()
     {
+        playerController = player.GetComponent<PlayerController>();
+        playerController.OnPlayerPickUpLastItem += UnlockEntranceDoor;
+
         for (int i = 0; i < maxItemsNeeded; i++)
         {
             int random = Random.Range(0, allItems.Length);
@@ -30,11 +37,20 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         }
 
         itemsNeeded = new GameObject[maxItemsNeeded];
+        playerController.checklistItems = new PlayerController.checklistItem[maxItemsNeeded];
 
         for (int i = 0; i < itemsNeeded.Length; i++)
         {
             GameObject newItem = Instantiate(allItems[itemNumber[i]]);
+            GameObject newIngredientText = Instantiate(checklistItemUIPrefab);
+            ObjectCore newItemProperties = newItem.GetComponent<ObjectCore>();
+
             itemsNeeded[i] = newItem;
+            newIngredientText.transform.SetParent(playerController.checklistGameObject.transform,false);
+            playerController.checklistItems[i].item = newIngredientText;
+            playerController.checklistItems[i].id = newItemProperties.id;
+            newIngredientText.name = "Ingredient #" + i + " Text";
+            newIngredientText.GetComponent<Text>().text = "• " + newItemProperties.itemName;
         }
 
         generator.OnGeneratorFinish += SpawnPlayer;
@@ -50,17 +66,23 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public void SpawnPlayer()
     {
         player.GetComponent<CharacterController>().enabled = false;
-        player.transform.position = generator.roomsSelected[0].transform.localPosition;
-        player.transform.rotation = generator.roomsSelected[0].transform.rotation;
+        player.transform.position = initialRoom.transform.position;
+        player.transform.rotation = initialRoom.transform.rotation;
         player.transform.position += new Vector3(0, 5, 0);
         player.GetComponent<CharacterController>().enabled = true;
-        Debug.Log("Local : " + generator.roomsSelected[0].transform.localPosition);
-        Debug.Log("World : " + generator.roomsSelected[0].transform.position);
-        Debug.Log("Player : " + player.transform.position);
+    }
+
+    private void UnlockEntranceDoor()
+    {
+        initialDoor.lockedDoor = false;
     }
 
     private void OnDestroy()
     {
-        generator.OnGeneratorFinish -= SpawnPlayer;
+        if(generator)
+        {
+            generator.OnGeneratorFinish -= SpawnPlayer;
+        }
+        
     }
 }
