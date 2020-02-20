@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public delegate void OnPlayerAction();
     public OnPlayerAction OnPlayerPickUpItem;
     public OnPlayerAction OnPlayerPlaceItem;
-    //public OnPlayerAction OnPlayerGetRobot;
+    public OnPlayerAction OnPlayerPickUpLastItem;
     public OnPlayerAction OnPlayerFoundKeyItem;
 
     [System.Serializable]
@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
             {
                 case "pickup":
                     //Debug.Log("do et");
+                    Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * hit.distance, Color.red);
                     if (Input.GetMouseButtonDown(0))
                     {
                         PickUpItem(hit.transform.gameObject);
@@ -107,10 +108,10 @@ public class PlayerController : MonoBehaviour
                     }
                     break;
                 case "door":
+                    Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * hit.distance, Color.blue);
                     if (Input.GetMouseButtonDown(0))
                     {
                         Interact(hit.transform.gameObject);
-                        //hit.transform.gameObject.GetComponentInParent<Door>().Interact();
                     }
                     break;
                 default:
@@ -145,60 +146,77 @@ public class PlayerController : MonoBehaviour
     {
         if (objectsGrabbed.Count < maxInventorySlots)
         {
-            Debug.Log("nani1");
-            int randomNumber = Random.Range(0, pickupSounds.Length);
-
-            if(pickupSounds.Length > 0)
+            if(item.GetComponent<ObjectCore>().canBePickedUp)
             {
-                pickupSounds[randomNumber].Play();
-            }
-            
+                Debug.Log("nani1");
+                int randomNumber = Random.Range(0, pickupSounds.Length);
 
-            ObjectCore newObject = item.transform.gameObject.GetComponent<ObjectCore>();
-            objectProperties newProperties = new objectProperties();
-            newProperties.id = newObject.id;
-            GameObject newIcon = Instantiate(newObject.icon);
-            newProperties.icon = newIcon;
-
-            objectsGrabbed.Add(newProperties);
-            Destroy(item);
-
-            if (OnPlayerPickUpItem != null)
-            {
-                OnPlayerPickUpItem();
-            }
-
-            if (idOfKeyItem == newProperties.id)
-            {
-                if (OnPlayerFoundKeyItem != null)
+                if (pickupSounds.Length > 0)
                 {
-                    OnPlayerFoundKeyItem();
+                    pickupSounds[randomNumber].Play();
                 }
-            }
 
-            if (idOfWin == newProperties.id)
-            {
-                /*if (OnPlayerGetRobot != null)
+
+                ObjectCore newObject = item.transform.gameObject.GetComponent<ObjectCore>();
+                objectProperties newProperties = new objectProperties();
+                newProperties.id = newObject.id;
+                GameObject newIcon = Instantiate(newObject.icon);
+                newProperties.icon = newIcon;
+
+                objectsGrabbed.Add(newProperties);
+                Destroy(item);
+
+                if (OnPlayerPickUpItem != null)
                 {
-                    OnPlayerGetRobot();
-                }*/
-            }
-
-            bool isItemOnChecklist = false;
-
-            for (int i = 0; i < checklistItems.Length; i++)
-            {
-                if (checklistItems[i].id == newProperties.id)
-                {
-                    GameObject checklistItem = checklistItems[i].item.transform.GetChild(0).gameObject;
-                    checklistItem.SetActive(true);
-                    isItemOnChecklist = true;
+                    OnPlayerPickUpItem();
                 }
-            }
 
-            if (isItemOnChecklist)
-            {
-                scracthChecklistSound.Play();
+                if (idOfKeyItem == newProperties.id)
+                {
+                    if (OnPlayerFoundKeyItem != null)
+                    {
+                        OnPlayerFoundKeyItem();
+                    }
+                }
+
+                if (idOfWin == newProperties.id)
+                {
+                    /*if (OnPlayerGetRobot != null)
+                    {
+                        OnPlayerGetRobot();
+                    }*/
+                }
+
+                bool isItemOnChecklist = false;
+
+                for (int i = 0; i < checklistItems.Length; i++)
+                {
+                    if (checklistItems[i].id == newProperties.id)
+                    {
+                        GameObject checklistItem = checklistItems[i].item.transform.GetChild(0).gameObject;
+                        checklistItem.SetActive(true);
+                        Debug.Log("This item has been scratched");
+                        isItemOnChecklist = true;
+                    }
+                }
+
+                if(newObject.isLastItem)
+                {
+                    // Player can return to home.
+                    Debug.Log("Player Can Go Home");
+
+                    if(OnPlayerPickUpLastItem != null)
+                    {
+                        OnPlayerPickUpLastItem();
+                    }
+                }
+
+                newObject.PickupObject();
+
+                if (isItemOnChecklist)
+                {
+                    scracthChecklistSound.Play();
+                }
             }
         }
     }
@@ -267,8 +285,12 @@ public class PlayerController : MonoBehaviour
             if (!couldOpenDoor)
             {
                 Debug.Log("DIDNT FOUND KEY");
-                //newDoor.dialogue.isPressed = true;
-                newDoor.doorSounds[(int)Door.doorStates.locked].Play();
+                newDoor.dialogueEvent.CheckMessage();
+                if (newDoor.doorSounds.Length > 0)
+                {
+                    newDoor.doorSounds[(int)Door.doorStates.locked].Play();
+                }
+                
             }
 
 

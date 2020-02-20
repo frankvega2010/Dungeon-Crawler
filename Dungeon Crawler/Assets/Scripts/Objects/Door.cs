@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour
 {
@@ -19,12 +20,22 @@ public class Door : MonoBehaviour
     public bool lockedDoor;
     public int idOfKey;
     public AudioSource[] doorSounds;
+    public bool sceneChanger;
+    public string nameOfScene;
+    public GameObject dialoguePrefab;
+    public GameObject dialogueObject;
+    public PlayerTextInteraction dialogueEvent;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(!dialogueObject)
+        {
+            dialogueObject = Instantiate(dialoguePrefab);
+            dialogueObject.transform.SetParent(GameObject.Find("Canvas").transform,false);
+            dialogueEvent = dialogueObject.GetComponent<PlayerTextInteraction>();
+        }
     }
 
     // Update is called once per frame
@@ -40,9 +51,17 @@ public class Door : MonoBehaviour
         switch (currentState)
         {
             case doorStates.open:
-                animator.SetTrigger("Close");
+                if (animator)
+                {
+                    animator.SetTrigger("Close");
+                }
+                
                 currentState = doorStates.closed;
-                doorSounds[(int)doorStates.closed].Play();
+                if (doorSounds.Length > 0)
+                {
+                    doorSounds[(int)doorStates.closed].Play();
+                }
+                
                 break;
             case doorStates.closed:
                 if(lockedDoor)
@@ -50,19 +69,39 @@ public class Door : MonoBehaviour
                     if(keyID == idOfKey)
                     {
                         Debug.Log("DOOR IS NOW OPEN");
-                        doorSounds[(int)doorStates.unlocked].Play();
+                        if (doorSounds.Length > 0)
+                        {
+                            doorSounds[(int)doorStates.unlocked].Play();
+                        }
+                        
                         lockedDoor = false;
                         couldOpen = true;
                     }
-
-                    //dialogue.isPressed = true;
+                    else
+                    {
+                        //dialogueEvent.CheckMessage();
+                    }
+                    
                 }
 
                 if (!lockedDoor && !couldOpen)
                 {
-                    animator.SetTrigger("Open");
+                    if (animator)
+                    {
+                        animator.SetTrigger("Open");
+                    }
+                    
                     currentState = doorStates.open;
-                    doorSounds[(int)doorStates.open].Play();
+                    if (doorSounds.Length > 0)
+                    {
+                        doorSounds[(int)doorStates.open].Play();
+                    }
+
+                    if (sceneChanger)
+                    {
+                        Invoke("ChangeScene", 1f);
+                    }
+
                     couldOpen = true;
                 }
                 else if (!lockedDoor && couldOpen)
@@ -80,8 +119,28 @@ public class Door : MonoBehaviour
 
     private void OpenDoor()
     {
-        animator.SetTrigger("Open");
+        Debug.Log("opening door");
+
+        if(animator)
+        {
+            animator.SetTrigger("Open");
+        }
+        
         currentState = doorStates.open;
-        doorSounds[(int)doorStates.open].Play();
+
+        if(doorSounds.Length > 0)
+        {
+            doorSounds[(int)doorStates.open].Play();
+        }
+
+        if (sceneChanger)
+        {
+            Invoke("ChangeScene", 1f);
+        }
+    }
+
+    private void ChangeScene()
+    {
+        SceneManager.LoadScene(nameOfScene);
     }
 }

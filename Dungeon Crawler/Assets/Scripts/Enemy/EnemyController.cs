@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    public delegate void OnEnemyAction(GameObject enemy);
+    public OnEnemyAction OnEnemyDeath;
+
     [Header("General Settings")]
     public GameObject player;
     public float speed;
     public int maxHealth;
+
+    /*[Header("Spawn Settings")]
+    public bool isInGroup;*/
 
     [Header("Animation Settings")]
     public Animator animator;
@@ -46,6 +52,7 @@ public class EnemyController : MonoBehaviour
         rig = GetComponent<Rigidbody>();
         hitboxCollider = GetComponent<CapsuleCollider>();
         animator = GetComponentInChildren<Animator>();
+        player = GameManager.Get().player;
         playerController = player.GetComponent<PlayerController>();
         currentBox = GetComponentInChildren<EnemyDamageBox>();
         currentBox.OnBoxEnterCollider += StartDamage;
@@ -149,6 +156,11 @@ public class EnemyController : MonoBehaviour
             rig.useGravity = false;
             animator.SetTrigger("Die");
             isDead = true;
+
+            if(OnEnemyDeath != null)
+            {
+                OnEnemyDeath(gameObject);
+            }
         }
         else
         {
@@ -175,7 +187,7 @@ public class EnemyController : MonoBehaviour
                 animator.SetTrigger("Hit");
             }
             
-            fireRateTimer = 0; // Maybe change it to zero to avoid instant damage?
+            fireRateTimer = 0;
             isActive = true;
         }
     }
