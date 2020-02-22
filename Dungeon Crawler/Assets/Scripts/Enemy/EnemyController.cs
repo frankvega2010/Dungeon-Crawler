@@ -21,6 +21,11 @@ public class EnemyController : MonoBehaviour
     public float speed;
     public int maxHealth;
 
+    [Header("Drop Settings")]
+    public GameObject objectToDrop;
+    public float dropChance;
+    private float finalDropChance;
+
     [Header("Animation Settings")]
     public Animator animator;
 
@@ -73,6 +78,8 @@ public class EnemyController : MonoBehaviour
         currentBox.OnBoxExitCollider += StopDamage;
 
         health = maxHealth;
+
+        finalDropChance = dropChance / 10f;
     }
 
     private void Update()
@@ -203,6 +210,7 @@ public class EnemyController : MonoBehaviour
         Debug.Log("dead");
         hitboxCollider.enabled = false;
         rig.useGravity = false;
+        DropItem();
 
         if (OnEnemyDeath != null)
         {
@@ -280,6 +288,18 @@ public class EnemyController : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    private void DropItem()
+    {
+        if (Random.Range(0f, 1f) <= finalDropChance)
+        {
+            Debug.Log("Item Dropped");
+            GameObject itemDrop = Instantiate(objectToDrop);
+            itemDrop.transform.position = transform.position;
+            itemDrop.transform.rotation = transform.rotation;
+            // spawn a dropped item
         }
     }
 

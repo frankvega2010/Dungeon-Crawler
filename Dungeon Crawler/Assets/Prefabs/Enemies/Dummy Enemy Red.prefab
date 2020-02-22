@@ -113,6 +113,9 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 5
   maxHealth: 100
+  objectToDrop: {fileID: 2999085314834004946, guid: 2945e2312aec49944b6fafa8afe1a83e,
+    type: 3}
+  dropChance: 3
   animator: {fileID: 0}
   normalMass: 10
   stunMass: 30

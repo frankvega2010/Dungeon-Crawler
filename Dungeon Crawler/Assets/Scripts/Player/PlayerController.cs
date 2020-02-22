@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public delegate void OnPlayerAction();
+    public OnPlayerAction OnPlayerDeath;
     public OnPlayerAction OnPlayerPickUpItem;
     public OnPlayerAction OnPlayerPlaceItem;
     public OnPlayerAction OnPlayerPickUpLastItem;
@@ -55,15 +56,24 @@ public class PlayerController : MonoBehaviour
 
     [Header("Check Variables")]
     public float health;
+    private UnityStandardAssets.Characters.FirstPerson.FirstPersonController fpsController;
+    private CharacterController characterController;
+    private CapsuleCollider capsuleCollider;
+    private Rigidbody rig;
 
     private List<objectProperties> objectsToRemove = new List<objectProperties>();
 
     // Start is called before the first frame update
     void Start()
     {
+        fpsController = GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>();
+        characterController = GetComponent<CharacterController>();
+        rig = GetComponent<Rigidbody>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
+
         checklistGameObject.SetActive(false);
         health = maxHealth;
-
+        Potion.OnPotionTouchPlayer += RecoverHealth;
     }
 
     // Update is called once per frame
@@ -138,7 +148,20 @@ public class PlayerController : MonoBehaviour
         health -= amount;
         if(health <= 0)
         {
+            Debug.Log("YOU DIED");
+
             health = 0;
+
+            rig.isKinematic = false;
+            fpsController.enabled = false;
+            characterController.enabled = false;
+            capsuleCollider.enabled = true;
+            staffOfLighting.gameObject.SetActive(false);
+
+            if(OnPlayerDeath != null)
+            {
+                OnPlayerDeath();
+            }
             //Game Over.
         }
     }
@@ -311,5 +334,19 @@ public class PlayerController : MonoBehaviour
         {
             newDoor.Interact(-1);
         }
+    }
+
+    public void RecoverHealth(float hp)
+    {
+        health += hp;
+        if(health >= maxHealth)
+        {
+            health = maxHealth;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        Potion.OnPotionTouchPlayer -= RecoverHealth;
     }
 }

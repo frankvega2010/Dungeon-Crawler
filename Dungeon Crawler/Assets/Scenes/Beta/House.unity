@@ -1494,7 +1494,7 @@ MonoBehaviour:
     objectLocation: {fileID: 0}
   combinedObjectToShow: {fileID: 2071999747453722903, guid: e5bcca2948d64f64e83c858640bdcbdc,
     type: 3}
-  combinedObjectLocation: {fileID: 2071999746175580505}
+  combinedObjectLocation: {fileID: 0}
   idOfObject: 0
   objectLocation: {fileID: 0}
   prefabToPlace: {fileID: 0}

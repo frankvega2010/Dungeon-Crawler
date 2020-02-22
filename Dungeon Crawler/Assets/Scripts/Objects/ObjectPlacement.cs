@@ -36,13 +36,19 @@ public class ObjectPlacement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(transform.childCount > 0)
+        {
+            combinedObjectLocation = transform.GetChild(0).GetComponent<Transform>();
+        }
+        
+
         if(readDataFromManager)
         {
             AreMultipleObjects = GameManager.Get().uniquePlacement.AreMultipleObjects;
             finalCraft = GameManager.Get().uniquePlacement.finalCraft;
             prefabs = GameManager.Get().uniquePlacement.prefabs;
             combinedObjectToShow = GameManager.Get().uniquePlacement.combinedObjectToShow;
-            combinedObjectLocation = GameManager.Get().uniquePlacement.combinedObjectLocation;
+            //combinedObjectLocation = GameManager.Get().uniquePlacement.combinedObjectLocation;
         }
 
         placeCollider = GetComponent<BoxCollider>();

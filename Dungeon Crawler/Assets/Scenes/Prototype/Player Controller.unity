@@ -362,6 +362,20 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 840055760905323346}
   m_PrefabAsset: {fileID: 0}
+--- !u!136 &329372997
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329372996}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  m_Radius: 0.5
+  m_Height: 1.796526
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.0017471313, z: 0}
 --- !u!4 &329373002 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 840055761579874487, guid: 3cb56aa563e9abd489d979026fcff30b,
@@ -687,7 +701,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -741,6 +755,7 @@ MonoBehaviour:
   itemName: 
   id: 0
   icon: {fileID: 38782003}
+  dontDestroyOnLoad: 0
   canBePickedUp: 1
   isLastItem: 0
 --- !u!65 &1314175354
