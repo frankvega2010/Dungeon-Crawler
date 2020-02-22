@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public GameObject player;
     public GameObject playerCheckList;
     public StaffBar staffBar;
+    public HealthBar hpBar;
+    public Animator canvasAnimator;
     public GameObject initialRoom;
     public Door initialDoor;
     public DungeonGenerator generator;

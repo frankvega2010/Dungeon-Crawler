@@ -159,7 +159,7 @@ public class Door : MonoBehaviour
                 GameManager.Get().RelocatePlayer();
                 break;
             case 3:
-                GetComponent<LevelLoader>().LoadHouseLevel();
+                GetComponent<LevelLoader>().LoadDungeonLevel();
                 break;
             default:
                 break;

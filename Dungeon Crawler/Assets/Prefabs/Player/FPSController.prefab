@@ -55,6 +55,7 @@ MonoBehaviour:
   staffCurrentCharge: 0
   lightingGameObject: {fileID: 2369486686565084733}
   model: {fileID: 7436742388357913259}
+  staffBar: {fileID: 0}
 --- !u!1 &840055761579705493
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,12 +456,14 @@ MonoBehaviour:
   maxInventorySlots: 9
   idOfKeyItem: -1
   checklistKey: 9
+  pickupKey: 101
   pickupSounds: []
   objectsGrabbed: []
   openChecklistSound: {fileID: 0}
   scracthChecklistSound: {fileID: 0}
   checklistGameObject: {fileID: 0}
   checklistItems: []
+  hpBar: {fileID: 0}
   staffOfLighting: {fileID: 6253651930830533581}
   playerCamera: {fileID: 840055761579705493}
   rayCastLayer:

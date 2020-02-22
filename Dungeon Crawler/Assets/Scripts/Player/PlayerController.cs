@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public KeyCode checklistKey;
 
     [Header("Objects")]
+    public KeyCode pickupKey;
     public AudioSource[] pickupSounds;
     public List<objectProperties> objectsGrabbed;
 
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour
     public checklistItem[] checklistItems;
 
     [Header("Assign Components")]
+    public HealthBar hpBar;
     public MageStaff staffOfLighting;
     public GameObject playerCamera;
 
@@ -74,6 +76,7 @@ public class PlayerController : MonoBehaviour
         checklistGameObject.SetActive(false);
         health = maxHealth;
         Potion.OnPotionTouchPlayer += RecoverHealth;
+        hpBar = GameManager.Get().hpBar;
     }
 
     // Update is called once per frame
@@ -107,20 +110,20 @@ public class PlayerController : MonoBehaviour
                 case "pickup":
                     //Debug.Log("do et");
                     Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * hit.distance, Color.red);
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetKeyDown(pickupKey))
                     {
                         PickUpItem(hit.transform.gameObject);
                     }
                     break;
                 case "place":
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetKeyDown(pickupKey))
                     {
                         PlaceItem(hit.transform.gameObject);
                     }
                     break;
                 case "door":
                     Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * hit.distance, Color.blue);
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetKeyDown(pickupKey))
                     {
                         Interact(hit.transform.gameObject);
                     }
@@ -164,6 +167,8 @@ public class PlayerController : MonoBehaviour
             }
             //Game Over.
         }
+
+        hpBar.SetHealth(health);
     }
 
     private void PickUpItem(GameObject item)
@@ -343,6 +348,7 @@ public class PlayerController : MonoBehaviour
         {
             health = maxHealth;
         }
+        hpBar.SetHealth(health);
     }
 
     private void OnDestroy()
