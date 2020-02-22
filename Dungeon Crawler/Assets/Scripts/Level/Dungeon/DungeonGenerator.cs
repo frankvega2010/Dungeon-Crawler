@@ -32,6 +32,8 @@ public class DungeonGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.Get().GetGenerator(this);
+
         if(presets.Length >= 1)
         {
             roomsSelected = new GameObject[maxRooms + 1];

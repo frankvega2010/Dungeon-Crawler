@@ -10,8 +10,18 @@ public class ObjectCore : MonoBehaviour
     public string itemName;
     public int id;
     public GameObject icon;
+    public bool dontDestroyOnLoad;
     public bool canBePickedUp = true;
     public bool isLastItem = false;
+
+    private void Awake()
+    {
+        if(dontDestroyOnLoad)
+        {
+            //Object.DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(this.gameObject);
+        }
+    }
 
     public void PickupObject()
     {

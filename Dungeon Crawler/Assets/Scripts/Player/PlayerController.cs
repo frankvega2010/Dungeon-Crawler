@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
     {
         checklistGameObject.SetActive(false);
         health = maxHealth;
+
     }
 
     // Update is called once per frame
@@ -181,6 +182,7 @@ public class PlayerController : MonoBehaviour
 
                 if (idOfWin == newProperties.id)
                 {
+                    Debug.Log("You won!!");
                     /*if (OnPlayerGetRobot != null)
                     {
                         OnPlayerGetRobot();

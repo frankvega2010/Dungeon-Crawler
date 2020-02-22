@@ -183,4 +183,6 @@ MonoBehaviour:
   itemName: Una Cosa 6
   id: 6
   icon: {fileID: 2071999747139590568}
+  dontDestroyOnLoad: 1
   canBePickedUp: 0
+  isLastItem: 0

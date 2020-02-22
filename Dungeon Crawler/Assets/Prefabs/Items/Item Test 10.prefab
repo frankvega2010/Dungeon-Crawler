@@ -184,3 +184,4 @@ MonoBehaviour:
   id: 10
   icon: {fileID: 2071999747139590568}
   canBePickedUp: 0
+  isLastItem: 0

@@ -18,6 +18,7 @@ public class ObjectPlacement : MonoBehaviour
     public bool AreMultipleObjects;
     [Tooltip("Tick this if this craft will make the game end.")]
     public bool finalCraft;
+    public bool readDataFromManager;
     [Header("Multiple Object Settings")]
     public prefabInfo[] prefabs;
     public GameObject combinedObjectToShow;
@@ -35,6 +36,15 @@ public class ObjectPlacement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(readDataFromManager)
+        {
+            AreMultipleObjects = GameManager.Get().uniquePlacement.AreMultipleObjects;
+            finalCraft = GameManager.Get().uniquePlacement.finalCraft;
+            prefabs = GameManager.Get().uniquePlacement.prefabs;
+            combinedObjectToShow = GameManager.Get().uniquePlacement.combinedObjectToShow;
+            combinedObjectLocation = GameManager.Get().uniquePlacement.combinedObjectLocation;
+        }
+
         placeCollider = GetComponent<BoxCollider>();
         if (AreMultipleObjects)
         {
@@ -51,11 +61,15 @@ public class ObjectPlacement : MonoBehaviour
             {
                 if (id == prefabs[i].id)
                 {
-                    GameObject newObject = Instantiate(prefabs[i].prefab);
-                    spawnedPrefabs[i] = newObject;
+                    if(prefabs[i].prefab)
+                    {
+                        GameObject newObject = Instantiate(prefabs[i].prefab);
+                        spawnedPrefabs[i] = newObject;
 
-                    newObject.transform.position = prefabs[i].objectLocation.position;
-                    newObject.transform.rotation = prefabs[i].objectLocation.rotation;
+                        newObject.transform.position = prefabs[i].objectLocation.position;
+                        newObject.transform.rotation = prefabs[i].objectLocation.rotation;
+                    }
+
                     amountPlaced++;
 
                     if(amountPlaced >= prefabs.Length)
@@ -74,7 +88,9 @@ public class ObjectPlacement : MonoBehaviour
 
                         if(finalCraft)
                         {
-                            if(OnPlacementFinalPieceAdded != null)
+                            Debug.Log("You won!!");
+
+                            if (OnPlacementFinalPieceAdded != null)
                             {
                                 OnPlacementFinalPieceAdded();
                             }

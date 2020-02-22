@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseButton: 0
-  damage: 20
+  damage: 50
   fireRate: 0.8
   staffMaxCharge: 100
   staffChargeUsageMultipler: 30
@@ -451,8 +451,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  idOfWin: -1
-  maxInventorySlots: 3
+  idOfWin: 10
+  maxInventorySlots: 9
   idOfKeyItem: -1
   checklistKey: 9
   pickupSounds: []
@@ -465,7 +465,7 @@ MonoBehaviour:
   playerCamera: {fileID: 840055761579705493}
   rayCastLayer:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 6912
   rayDistance: 8
   health: 0
 --- !u!1 &2369486686565084733

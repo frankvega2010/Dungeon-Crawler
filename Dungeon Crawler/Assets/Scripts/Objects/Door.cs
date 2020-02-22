@@ -142,5 +142,11 @@ public class Door : MonoBehaviour
     private void ChangeScene()
     {
         SceneManager.LoadScene(nameOfScene);
+        if(SceneManager.GetActiveScene().name == "Dungeon Beta")
+        {
+            GameManager.Get().spawnInForest = true;
+            GameManager.Get().RelocatePlayer();
+        }
+        
     }
 }

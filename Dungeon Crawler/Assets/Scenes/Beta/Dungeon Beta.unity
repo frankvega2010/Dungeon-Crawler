@@ -583,6 +583,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FPSController
       objectReference: {fileID: 0}
+    - target: {fileID: 840055761579705495, guid: 3cb56aa563e9abd489d979026fcff30b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 840055761579874487, guid: 3cb56aa563e9abd489d979026fcff30b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -772,7 +777,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1370904478
 Transform:
   m_ObjectHideFlags: 0
@@ -805,6 +810,7 @@ MonoBehaviour:
   initialRoom: {fileID: 195073454}
   initialDoor: {fileID: 0}
   generator: {fileID: 48906987}
+  uniquePlacement: {fileID: 0}
   maxItemsNeeded: 6
   allItems:
   - {fileID: 2071999747453722903, guid: b599b5331b4b7304e9d23bb79c113e2d, type: 3}
@@ -907,7 +913,7 @@ MonoBehaviour:
   idOfKey: 0
   doorSounds: []
   sceneChanger: 1
-  nameOfScene: Dungeon Room Test
+  nameOfScene: House
   dialoguePrefab: {fileID: 660532101547537115, guid: 75d8789b297d47f438bcb210e246dfa8,
     type: 3}
   dialogueObject: {fileID: 0}
