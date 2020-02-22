@@ -6,9 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Beta/Dungeon Beta.unity
-    guid: 181f0b1f2ea29f544ac6ee43106cf344
+    path: Assets/Scenes/Menu/MenuScene.unity
+    guid: 2bcf95b0a8d104a3ca254e4c728fb70b
+  - enabled: 1
+    path: Assets/Scenes/Menu/Credits.unity
+    guid: 1a1fb55116d7c8b4cae0a7b55b987ce7
   - enabled: 1
     path: Assets/Scenes/Beta/House.unity
     guid: c5bc3b8ecb24fa4458f8d0365e68e2f7
+  - enabled: 1
+    path: Assets/Scenes/Beta/Dungeon Beta.unity
+    guid: 181f0b1f2ea29f544ac6ee43106cf344
   m_configObjects: {}

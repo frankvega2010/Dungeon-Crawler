@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public GameObject playerPrefab;
     public GameObject player;
     public GameObject playerCheckList;
+    public StaffBar staffBar;
     public GameObject initialRoom;
     public Door initialDoor;
     public DungeonGenerator generator;
@@ -78,6 +79,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         }
 
         RelocatePlayer();
+        playerController.staffOfLighting.staffBar = staffBar;
         //generator.OnGeneratorFinish += SpawnPlayer;
 
     }

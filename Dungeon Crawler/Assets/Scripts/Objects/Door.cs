@@ -21,7 +21,7 @@ public class Door : MonoBehaviour
     public int idOfKey;
     public AudioSource[] doorSounds;
     public bool sceneChanger;
-    public string nameOfScene;
+    public int sceneIndex;
     public GameObject dialoguePrefab;
     public GameObject dialogueObject;
     public PlayerTextInteraction dialogueEvent;
@@ -141,12 +141,38 @@ public class Door : MonoBehaviour
 
     private void ChangeScene()
     {
+        /*if (sceneIndex == 2)
+        {
+            GetComponent<LevelLoader>().LoadHouseLevel();
+            GameManager.Get().spawnInForest = true;
+            GameManager.Get().RelocatePlayer();
+        }*/
+
+        switch (sceneIndex)
+        {
+            case 0:
+                GetComponent<LevelLoader>().LoadMenu();
+                break;
+            case 2:
+                GetComponent<LevelLoader>().LoadHouseLevel();
+                GameManager.Get().spawnInForest = true;
+                GameManager.Get().RelocatePlayer();
+                break;
+            case 3:
+                GetComponent<LevelLoader>().LoadHouseLevel();
+                break;
+            default:
+                break;
+        }
+
+        //GetComponent<LevelLoader>().lo
+        /*
         SceneManager.LoadScene(nameOfScene);
         if(SceneManager.GetActiveScene().name == "Dungeon Beta")
         {
             GameManager.Get().spawnInForest = true;
             GameManager.Get().RelocatePlayer();
         }
-        
+        */
     }
 }
