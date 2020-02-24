@@ -30,26 +30,24 @@ public class LevelLoader : MonoBehaviour
     {
         StartCoroutine(LoadLevel(2));
         MusicManager.Get().StopAllSongs();
-        MusicManager.Get().gameplaySong.Play();
+        MusicManager.Get().houseSong.Play();
     }
 
     public void LoadDungeonLevel()
     {
         //LoadLevel(3);
         StartCoroutine(LoadLevel(3));
+        MusicManager.Get().StopAllSongs();
+        MusicManager.Get().dungeonSong.Play();
     }
 
     public void LoadMenu()
     {
         //LoadLevel(0);
+        Debug.Log("GOING TO MENU");
         StartCoroutine(LoadLevel(0));
         MusicManager.Get().StopAllSongs();
         MusicManager.Get().menuSong.Play();
-        if(GameManager.Get())
-        {
-            Destroy(GameManager.Get());
-        }
-        
     }
 
     public void LoadCredits()
@@ -83,9 +81,18 @@ public class LevelLoader : MonoBehaviour
 
         switch (sceneIndex)
         {
+            case 0:
+                if (GameManager.Get().gameObject)
+                {
+                    Debug.Log("Deleting Everything");
+                    GameManager.Get().CleanEverything();
+                }
+                break;
             case 2:
+                //GameManager.Get().houseDoor.enabled = false;
                 GameManager.Get().spawnInForest = true;
                 GameManager.Get().RelocatePlayer();
+                GameManager.Get().player.GetComponentInChildren<Camera>().farClipPlane = 300;
                 break;
             default:
                 break;

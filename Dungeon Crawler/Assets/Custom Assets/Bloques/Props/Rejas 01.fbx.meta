@@ -3,7 +3,12 @@ guid: 36e688befc9bc7c4983dbc3a6549a91d
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rejas
+    second: {fileID: 2100000, guid: be2c877ee35449e4a968443f77184380, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

@@ -3,7 +3,12 @@ guid: 29b6aa8fa83f85141b7b1c626a9672f6
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bordes_y_soportes
+    second: {fileID: 2100000, guid: bdd431082402a824f83b9e9b8bc432ad, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

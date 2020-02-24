@@ -7,6 +7,7 @@ public class LightingBeam : MonoBehaviour
     [Header("General Settings")]
     public float fireRate;
     public float damage;
+    
 
     [Header("Checking Variables")]
     public bool isActive;

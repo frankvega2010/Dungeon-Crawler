@@ -3,7 +3,12 @@ guid: f6b71be38a3d56d4a98c36b80c37bf3e
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Escudo_Y_Espada
+    second: {fileID: 2100000, guid: 73646b9eb4a91de40ab4c2aa56751a65, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

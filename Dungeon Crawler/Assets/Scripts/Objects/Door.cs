@@ -18,6 +18,7 @@ public class Door : MonoBehaviour
     public Animator animator;
     public doorStates currentState;
     public bool lockedDoor;
+    public bool openAtStart;
     public int idOfKey;
     public AudioSource[] doorSounds;
     public bool sceneChanger;
@@ -36,13 +37,25 @@ public class Door : MonoBehaviour
             dialogueObject.transform.SetParent(GameObject.Find("Canvas").transform,false);
             dialogueEvent = dialogueObject.GetComponent<PlayerTextInteraction>();
         }
+
+        if(openAtStart)
+        {
+            if (currentState == doorStates.closed)
+            {
+                if (animator)
+                {
+                    animator.SetTrigger("Open");
+                }
+            }
+        }
+        
     }
 
-    // Update is called once per frame
+    /*// Update is called once per frame
     void Update()
     {
         
-    }
+    }*/
 
     public bool Interact(int keyID)
     {
@@ -99,7 +112,7 @@ public class Door : MonoBehaviour
 
                     if (sceneChanger)
                     {
-                        Invoke("ChangeScene", 1f);
+                        Invoke("ChangeScene", 0.2f);
                     }
 
                     couldOpen = true;
@@ -108,6 +121,49 @@ public class Door : MonoBehaviour
                 {
                     Debug.Log("OPENING");
                     Invoke("OpenDoor", 1.7f);
+                }
+                break;
+            default:
+                break;
+        }
+
+        return couldOpen;
+    }
+
+    public bool InteractForced()
+    {
+        bool couldOpen = false;
+
+        switch (currentState)
+        {
+            case doorStates.open:
+                if (animator)
+                {
+                    animator.SetTrigger("Close");
+                }
+
+                currentState = doorStates.closed;
+                if (doorSounds.Length > 0)
+                {
+                    doorSounds[(int)doorStates.closed].Play();
+                }
+
+                break;
+            case doorStates.closed:
+                if (animator)
+                {
+                    animator.SetTrigger("Open");
+                }
+
+                currentState = doorStates.open;
+                if (doorSounds.Length > 0)
+                {
+                    doorSounds[(int)doorStates.open].Play();
+                }
+
+                if (sceneChanger)
+                {
+                    Invoke("ChangeScene", 0.2f);
                 }
                 break;
             default:
@@ -157,9 +213,11 @@ public class Door : MonoBehaviour
                 GetComponent<LevelLoader>().LoadHouseLevel();
                 GameManager.Get().spawnInForest = true;
                 GameManager.Get().RelocatePlayer();
+                GameManager.Get().player.GetComponentInChildren<Camera>().farClipPlane = 300;
                 break;
             case 3:
                 GetComponent<LevelLoader>().LoadDungeonLevel();
+                GameManager.Get().player.GetComponentInChildren<Camera>().farClipPlane = 15;
                 break;
             default:
                 break;

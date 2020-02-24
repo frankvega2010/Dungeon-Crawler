@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 1219328299208681998}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -7.04, y: -3.878, z: 4.95}
-  m_LocalScale: {x: 1.2117, y: 2.5594232, z: 1.2117}
+  m_LocalScale: {x: 1.0821694, y: 2.2516527, z: 1.2117}
   m_Children:
   - {fileID: 1219328300364292566}
   - {fileID: 1219328299675570245}
@@ -113,7 +113,11 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 5
   maxHealth: 100
+  objectToDrop: {fileID: 0}
+  dropChance: 0
   animator: {fileID: 0}
+  normalMass: 0
+  stunMass: 0
   canBeStunned: 1
   stunTime: 1
   isStunned: 0
@@ -122,6 +126,8 @@ MonoBehaviour:
   stopDistance: 2.5
   deathTime: 1.9
   deathTimer: 0
+  currentState: 0
+  lastState: 0
   health: 0
   isDead: 0
   hitboxCollider: {fileID: 0}

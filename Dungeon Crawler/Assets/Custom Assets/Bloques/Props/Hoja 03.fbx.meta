@@ -3,7 +3,12 @@ guid: c252b8608d96e9d4fb3f286249a10c9f
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hojas_Y_pergamino
+    second: {fileID: 2100000, guid: 9bb43e8735a89944a9c3ca335f24fb6f, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

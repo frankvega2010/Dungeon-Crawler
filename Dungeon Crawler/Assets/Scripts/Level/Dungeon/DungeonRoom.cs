@@ -93,6 +93,7 @@ public class DungeonRoom : MonoBehaviour
     public void FinishSpawnEvent()
     {
         // Open Gate
+        //doors[doors.Length - 1].GetComponent<Door>().animator.SetTrigger("Open");
         doors[doors.Length-1].SetActive(false);
         spawnedItem.GetComponent<ObjectCore>().canBePickedUp = true;
     }
@@ -102,6 +103,7 @@ public class DungeonRoom : MonoBehaviour
         // Open all doors
         for (int i = 0; i < doors.Length; i++)
         {
+            //doors[i].GetComponent<Door>().animator.SetTrigger("Open");
             doors[i].SetActive(false);
         }
     }
@@ -110,6 +112,7 @@ public class DungeonRoom : MonoBehaviour
     {
         for (int i = 0; i < doors.Length; i++)
         {
+            //doors[i].GetComponent<Door>().animator.SetTrigger("Close");
             doors[i].SetActive(true);
         }
     }

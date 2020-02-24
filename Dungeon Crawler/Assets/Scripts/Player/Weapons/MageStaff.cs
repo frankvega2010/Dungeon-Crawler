@@ -9,6 +9,8 @@ public class MageStaff : MonoBehaviour
     public int mouseButton;
     public float damage;
     public float fireRate;
+    public float rotateSpeed;
+    public AudioSource sound;
 
     [Header("Charge Settings")]
     public float staffMaxCharge;
@@ -26,10 +28,12 @@ public class MageStaff : MonoBehaviour
     private LightingBeam lightingBeam;
     private bool doOnce;
     public StaffBar staffBar;
+    //public Rigidbody rig;
 
     // Start is called before the first frame update
     void Start()
     {
+        //rig = lightingGameObject.GetComponent<Rigidbody>();
         lightingBeam = lightingGameObject.GetComponent<LightingBeam>();
         lightingBeam.damage = damage;
         lightingBeam.fireRate = fireRate;
@@ -40,13 +44,17 @@ public class MageStaff : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(staffCurrentCharge > 0)
+        //rig.AddTorque(new Vector3(0, rotateSpeed, 0));
+        lightingGameObject.transform.RotateAround(lightingGameObject.transform.position, lightingGameObject.transform.up, Time.deltaTime * rotateSpeed);
+
+        if (staffCurrentCharge > 0)
         {
             if (Input.GetMouseButtonDown(mouseButton))
             {
                 canRecharge = false;
                 lightingGameObject.SetActive(true);
                 lightingBeam.isActive = true;
+                sound.Play();
                 // Begin Animation
             }
 
@@ -64,6 +72,7 @@ public class MageStaff : MonoBehaviour
                 {
                     if(!doOnce)
                     {
+                        sound.Stop();
                         staffCurrentCharge = 0;
                         EndFiring();
                         doOnce = true;
@@ -74,6 +83,7 @@ public class MageStaff : MonoBehaviour
 
         if (Input.GetMouseButtonUp(mouseButton))
         {
+            sound.Stop();
             EndFiring();
             doOnce = false;
         }

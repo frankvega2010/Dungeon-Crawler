@@ -3,7 +3,12 @@ guid: b22d4e0339912e04cabe7ded3ee9ce27
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Baldosas_Piso
+    second: {fileID: 2100000, guid: 00d0950909d02a249b9c746e5a1efc96, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

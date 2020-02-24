@@ -3,7 +3,12 @@ guid: 60ad673ef669b6c43b7cf02a6a4f6b5c
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Piso
+    second: {fileID: 2100000, guid: 234c55b529f36744ea830fd58c8e34a1, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

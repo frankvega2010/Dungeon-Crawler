@@ -58,7 +58,7 @@ public class DungeonGenerator : MonoBehaviour
             int repeatedRoom;
             int lastRandomNumber;
 
-            if(randomRoomNumber != 0)
+            if(randomRoomNumber != 0 && randomRoomNumber != 1)
             {
                 repeatedRoom = 1;
                 lastRandomNumber = randomRoomNumber;
@@ -73,7 +73,7 @@ public class DungeonGenerator : MonoBehaviour
             {
                 int randomRoomNumber2 = Random.Range(0, presets.Length);
 
-                if(randomRoomNumber2 == lastRandomNumber && randomRoomNumber2 != 0)
+                if(randomRoomNumber2 == lastRandomNumber && randomRoomNumber2 != 0 && randomRoomNumber2 != 1)
                 {
                     repeatedRoom++;
                     if(repeatedRoom >= 2)

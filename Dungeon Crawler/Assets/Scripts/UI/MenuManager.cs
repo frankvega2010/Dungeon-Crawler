@@ -61,13 +61,15 @@ public class MenuManager : MonoBehaviour
         //LoadLevel(2);
         StartCoroutine(LoadLevel(2));
         MusicManager.Get().StopAllSongs();
-        MusicManager.Get().gameplaySong.Play();
+        MusicManager.Get().houseSong.Play();
     }
 
     public void LoadDungeonLevel()
     {
         //LoadLevel(3);
         StartCoroutine(LoadLevel(3));
+        MusicManager.Get().StopAllSongs();
+        MusicManager.Get().dungeonSong.Play();
     }
 
     public void LoadMenu()

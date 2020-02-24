@@ -37,6 +37,10 @@ public class EnemyController : MonoBehaviour
     public bool isStunned;
     private float stunTimer;
 
+    [Header("Sound Settings")]
+    public AudioSource receiveHitSound;
+    public AudioSource deadSound;
+
     [Header("Damage Settings")]
     public float damage;
     public float fireRate;
@@ -188,6 +192,7 @@ public class EnemyController : MonoBehaviour
 
     public void ReceiveDamage(float amount)
     {
+        receiveHitSound.Play();
         health -= amount;
         if (health <= 0)
         {
@@ -207,6 +212,7 @@ public class EnemyController : MonoBehaviour
 
     public void Die()
     {
+        deadSound.Play();
         Debug.Log("dead");
         hitboxCollider.enabled = false;
         rig.useGravity = false;

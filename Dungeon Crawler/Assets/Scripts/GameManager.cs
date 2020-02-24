@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public GameObject playerPrefab;
     public GameObject player;
     public GameObject playerCheckList;
+    public GameObject UI;
+    public Door houseDoor;
     public StaffBar staffBar;
     public HealthBar hpBar;
     public Animator canvasAnimator;
@@ -17,6 +19,12 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public Door initialDoor;
     public DungeonGenerator generator;
     public ObjectPlacement uniquePlacement;
+
+    [Header("Loss Win Settings")]
+    public float waitTime;
+    public GameObject winPanel;
+    public GameObject lossPanel;
+    public LevelLoader levelLoader;
 
     [Header("Spawn Settings")]
     public bool spawnInForest;
@@ -82,6 +90,9 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
         RelocatePlayer();
         playerController.staffOfLighting.staffBar = staffBar;
+        playerController.OnPlayerDeath += Loss;
+        playerController.OnPlayerWin += Win;
+        levelLoader = GetComponent<LevelLoader>();
         //generator.OnGeneratorFinish += SpawnPlayer;
 
     }
@@ -97,9 +108,9 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         player.GetComponent<CharacterController>().enabled = false;
         player.transform.position = initialRoom.transform.position;
         player.transform.rotation = initialRoom.transform.rotation;
-        player.transform.position += new Vector3(0, 5, 0);
+        player.transform.position += new Vector3(0, 1, 0);
         player.GetComponent<CharacterController>().enabled = true;
-        initialDoor = initialRoom.GetComponentInChildren<Door>();
+        //initialDoor = initialRoom.GetComponentInChildren<Door>();
     }
 
     public void RelocatePlayer()
@@ -111,6 +122,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
             player.transform.rotation = forestSpawn.rotation;
             player.transform.position += new Vector3(0, 5, 0);
             player.GetComponent<CharacterController>().enabled = true;
+            Invoke("DisableHouseDoor", 0.5f);
 
             spawnInForest = false;
         }
@@ -121,9 +133,23 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
             player.transform.rotation = houseSpawn.rotation;
             player.transform.position += new Vector3(0, 5, 0);
             player.GetComponent<CharacterController>().enabled = true;
+            
 
             //spawnInForest = true;
         }
+    }
+
+    private void DisableHouseDoor()
+    {
+        Debug.Log("Disabling Door");
+        if(houseDoor)
+        {
+            houseDoor.enabled = false;
+            //Destroy(houseDoor);
+            //houseDoor.gameObject.GetComponent<BoxCollider>().enabled = false;
+            houseDoor.lockedDoor = true;
+        }
+        
     }
 
     private void UnlockEntranceDoor()
@@ -137,11 +163,70 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         generator.OnGeneratorFinish += SpawnPlayer;
     }
 
+    public void Win()
+    {
+        winPanel.SetActive(true);
+        lossPanel.SetActive(false);
+        Invoke("ChangeScene", waitTime);
+    }
+
+    public void Loss()
+    {
+        MusicManager.Get().StopAllSongs();
+        MusicManager.Get().lossSong.Play();
+        winPanel.SetActive(false);
+        lossPanel.SetActive(true);
+        Invoke("ChangeScene", waitTime);
+    }
+
+    public void ChangeScene()
+    {
+        levelLoader.LoadMenu();
+    }
+
+    public void CleanEverything()
+    {
+        if (forestSpawn)
+        {
+            Destroy(forestSpawn.gameObject);
+            Destroy(houseSpawn.gameObject);
+        }
+
+        if (UI)
+        {
+            Destroy(UI);
+        }
+        
+        if(itemsNeeded.Length > 0)
+        {
+            for (int i = 0; i < itemsNeeded.Length; i++)
+            {
+                Destroy(itemsNeeded[i]);
+            }
+        }
+        
+        Destroy(player);
+        Destroy(playerController);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        if(houseDoor)
+        {
+            houseDoor.enabled = false;
+        }
+        Destroy(this.gameObject);
+    }
+
     private void OnDestroy()
     {
         if(generator)
         {
             generator.OnGeneratorFinish -= SpawnPlayer;
+        }
+
+        if(playerController)
+        {
+            playerController.OnPlayerDeath -= Loss;
+            playerController.OnPlayerWin -= Win;
         }
         
     }

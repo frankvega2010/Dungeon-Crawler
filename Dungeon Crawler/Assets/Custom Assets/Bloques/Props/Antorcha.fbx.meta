@@ -3,7 +3,12 @@ guid: 0326d604728c52f439e00e312778da93
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Antorcha_y_Palanca
+    second: {fileID: 2100000, guid: 45e0603f558369443837d750bf3cdb69, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

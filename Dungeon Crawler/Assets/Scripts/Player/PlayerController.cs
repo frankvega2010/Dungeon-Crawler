@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public delegate void OnPlayerAction();
     public OnPlayerAction OnPlayerDeath;
+    public OnPlayerAction OnPlayerWin;
     public OnPlayerAction OnPlayerPickUpItem;
     public OnPlayerAction OnPlayerPlaceItem;
     public OnPlayerAction OnPlayerPickUpLastItem;
@@ -40,6 +41,8 @@ public class PlayerController : MonoBehaviour
     public KeyCode pickupKey;
     public AudioSource[] pickupSounds;
     public List<objectProperties> objectsGrabbed;
+    public AudioSource potionSound;
+    public AudioSource receiveHitSound;
 
     [Header("Checklist Settings")]
     public AudioSource openChecklistSound;
@@ -88,10 +91,12 @@ public class PlayerController : MonoBehaviour
 
             if(checklistGameObject.activeSelf)
             {
+                openChecklistSound.Play();
                 // Play sound
             }
             else
             {
+                openChecklistSound.Stop();
                 // Play another sound?
             }
 
@@ -108,7 +113,7 @@ public class PlayerController : MonoBehaviour
             switch (layerHitted)
             {
                 case "pickup":
-                    //Debug.Log("do et");
+                    Debug.Log("do et");
                     Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * hit.distance, Color.red);
                     if (Input.GetKeyDown(pickupKey))
                     {
@@ -148,27 +153,32 @@ public class PlayerController : MonoBehaviour
 
     public void ReceiveDamage(float amount)
     {
-        health -= amount;
-        if(health <= 0)
+        if(health > 0)
         {
-            Debug.Log("YOU DIED");
-
-            health = 0;
-
-            rig.isKinematic = false;
-            fpsController.enabled = false;
-            characterController.enabled = false;
-            capsuleCollider.enabled = true;
-            staffOfLighting.gameObject.SetActive(false);
-
-            if(OnPlayerDeath != null)
+            receiveHitSound.Play();
+            health -= amount;
+            if (health <= 0)
             {
-                OnPlayerDeath();
-            }
-            //Game Over.
-        }
+                Debug.Log("YOU DIED");
 
-        hpBar.SetHealth(health);
+                health = 0;
+
+                rig.isKinematic = false;
+                fpsController.enabled = false;
+                characterController.enabled = false;
+                capsuleCollider.enabled = true;
+                staffOfLighting.gameObject.SetActive(false);
+
+                if (OnPlayerDeath != null)
+                {
+                    OnPlayerDeath();
+                }
+                //Game Over.
+            }
+
+            hpBar.SetHealth(health);
+        }
+        
     }
 
     private void PickUpItem(GameObject item)
@@ -211,10 +221,12 @@ public class PlayerController : MonoBehaviour
                 if (idOfWin == newProperties.id)
                 {
                     Debug.Log("You won!!");
-                    /*if (OnPlayerGetRobot != null)
+                    fpsController.enabled = false;
+                    characterController.enabled = false;
+                    if (OnPlayerWin != null)
                     {
-                        OnPlayerGetRobot();
-                    }*/
+                        OnPlayerWin();
+                    }
                 }
 
                 bool isItemOnChecklist = false;
@@ -226,6 +238,7 @@ public class PlayerController : MonoBehaviour
                         GameObject checklistItem = checklistItems[i].item.transform.GetChild(0).gameObject;
                         checklistItem.SetActive(true);
                         Debug.Log("This item has been scratched");
+                        scracthChecklistSound.Play();
                         isItemOnChecklist = true;
                     }
                 }
@@ -343,6 +356,7 @@ public class PlayerController : MonoBehaviour
 
     public void RecoverHealth(float hp)
     {
+        potionSound.Play();
         health += hp;
         if(health >= maxHealth)
         {
